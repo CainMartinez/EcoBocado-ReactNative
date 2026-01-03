@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Text, Portal, Dialog, Paragraph } from 'react-native-paper';
+import { View, Text, StyleSheet } from 'react-native';
 import { Logo, Card, Button } from '../../components/ui';
+import Dialog from '../../components/ui/Dialog';
 import Input from '../../components/ui/Input';
 import { ScreenProps } from '../../navigation/types';
 import { colors, spacing } from '../../utils/theme';
@@ -28,7 +28,7 @@ const ForgotPasswordScreen: FC<ScreenProps<'ForgotPassword'>> = ({ navigation })
       <Card>
         <Logo subtitle="Recuperar contraseña" />
         
-        <Text variant="bodyMedium" style={styles.description}>
+        <Text style={styles.description}>
           Introduce tu correo electrónico de repartidor. El gerente recibirá tu solicitud
           y te contactará para restablecer tu contraseña.
         </Text>
@@ -37,7 +37,6 @@ const ForgotPasswordScreen: FC<ScreenProps<'ForgotPassword'>> = ({ navigation })
           label="Correo electrónico"
           value={email}
           onChangeText={setEmail}
-          icon="email"
           keyboardType="email-address"
           autoCapitalize="none"
         />
@@ -51,20 +50,19 @@ const ForgotPasswordScreen: FC<ScreenProps<'ForgotPassword'>> = ({ navigation })
         </Button>
       </Card>
 
-      <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Title>Solicitud enviada</Dialog.Title>
-          <Dialog.Content>
-            <Paragraph>
-              Tu solicitud ha sido enviada al gerente. Recibirás un correo con 
-              instrucciones para restablecer tu contraseña.
-            </Paragraph>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={hideDialog}>Entendido</Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <Dialog 
+        visible={visible} 
+        onDismiss={hideDialog}
+        title="Solicitud enviada"
+        actions={
+          <Button onPress={hideDialog}>Entendido</Button>
+        }
+      >
+        <Text style={styles.dialogText}>
+          Tu solicitud ha sido enviada al gerente. Recibirás un correo con 
+          instrucciones para restablecer tu contraseña.
+        </Text>
+      </Dialog>
     </View>
   );
 };
@@ -77,9 +75,15 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background.default,
   },
   description: {
+    fontSize: 14,
     color: colors.text.secondary,
     marginBottom: spacing.lg,
     textAlign: 'center',
+  },
+  dialogText: {
+    fontSize: 14,
+    color: colors.text.primary,
+    lineHeight: 20,
   },
 });
 

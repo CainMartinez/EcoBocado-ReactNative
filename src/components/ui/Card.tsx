@@ -1,22 +1,17 @@
 import React, { FC, ReactNode } from 'react';
-import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { Surface } from 'react-native-paper';
+import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { spacing, borderRadius, shadows } from '../../utils/theme';
 
 interface CardProps {
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
-  elevation?: 0 | 1 | 2 | 3 | 4 | 5;
 }
 
-const Card: FC<CardProps> = ({ children, style, elevation = 4 }) => {
+const Card: FC<CardProps> = ({ children, style }) => {
   return (
-    <Surface 
-      style={[styles.card, shadows.medium, style]} 
-      elevation={elevation}
-    >
+    <View style={[styles.card, style]}>
       {children}
-    </Surface>
+    </View>
   );
 };
 
@@ -24,6 +19,12 @@ const styles = StyleSheet.create({
   card: {
     padding: spacing.xl,
     borderRadius: borderRadius.large,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
 });
 

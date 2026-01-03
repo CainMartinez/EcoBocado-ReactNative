@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { Text } from 'react-native-paper';
+import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { colors, spacing, typography } from '../../utils/theme';
 
 interface LogoProps {
@@ -13,15 +12,9 @@ const Logo: FC<LogoProps> = ({ subtitle, style }) => {
     <View style={[styles.container, style]}>
       <View style={styles.logoWrapper}>
         <Text style={styles.emoji}>🌿</Text>
-        <Text variant="headlineLarge" style={styles.title}>
-          EcoBocado
-        </Text>
+        <Text style={styles.title}>EcoBocado</Text>
       </View>
-      {subtitle && (
-        <Text variant="bodyLarge" style={styles.subtitle}>
-          {subtitle}
-        </Text>
-      )}
+      {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
     </View>
   );
 };
@@ -41,12 +34,14 @@ const styles = StyleSheet.create({
     marginRight: spacing.sm,
   },
   title: {
-    fontWeight: '700' as const,
+    fontSize: typography.fontSizes.xxxl,
+    fontWeight: '700',
     color: colors.primary.main,
   },
   subtitle: {
+    fontSize: typography.fontSizes.lg,
     color: colors.text.secondary,
-    textAlign: 'center' as const,
+    textAlign: 'center',
   },
 });
 

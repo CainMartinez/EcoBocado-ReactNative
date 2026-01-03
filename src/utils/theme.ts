@@ -1,5 +1,3 @@
-import { MD3LightTheme, MD3Theme } from 'react-native-paper';
-
 // Interfaces para la estructura del tema
 interface ColorShades {
   main: string;
@@ -235,23 +233,11 @@ export const typography: Typography = {
   },
 };
 
-// Tema de React Native Paper
-export const theme: MD3Theme = {
-  ...MD3LightTheme,
-  colors: {
-    ...MD3LightTheme.colors,
-    primary: colors.primary.main,
-    primaryContainer: colors.primary.lighter,
-    secondary: colors.secondary.main,
-    secondaryContainer: colors.secondary.light,
-    tertiary: colors.accent.orange,
-    error: colors.error,
-    background: colors.background.default,
-    surface: colors.background.paper,
-    surfaceVariant: colors.neutral.offWhite,
-    onSurface: colors.text.primary,
-    onSurfaceVariant: colors.text.secondary,
-    outline: colors.neutral.gray,
-  },
-  roundness: borderRadius.medium,
-};
+// Hook para usar el tema en los componentes
+export const useAppTheme = () => ({
+  colors,
+  spacing,
+  borderRadius,
+  shadows,
+  typography,
+});

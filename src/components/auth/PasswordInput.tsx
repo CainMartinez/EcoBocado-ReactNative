@@ -1,6 +1,8 @@
 import React, { FC, useState } from 'react';
-import { TextInput } from 'react-native-paper';
+import { TouchableOpacity } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Input from '../ui/Input';
+import { colors } from '../../utils/theme';
 
 interface PasswordInputProps {
   label?: string;
@@ -21,14 +23,16 @@ const PasswordInput: FC<PasswordInputProps> = ({
       label={label}
       value={value}
       onChangeText={onChangeText}
-      icon="lock"
       secureTextEntry={secureTextEntry}
       autoCapitalize="none"
       rightIcon={
-        <TextInput.Icon 
-          icon={secureTextEntry ? "eye" : "eye-off"}
-          onPress={() => setSecureTextEntry(!secureTextEntry)}
-        />
+        <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)}>
+          <MaterialCommunityIcons 
+            name={secureTextEntry ? "eye" : "eye-off"} 
+            size={24} 
+            color={colors.text.secondary}
+          />
+        </TouchableOpacity>
       }
       {...props}
     />
