@@ -61,8 +61,8 @@ export default function DeliveriesScreen() {
     fetchOrders();
   }, []);
 
-  const openInMaps = (lat: number, lng: number) => {
-    const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+  const openInMaps = (address: string) => {
+    const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
     Linking.openURL(url);
   };
 
@@ -151,6 +151,28 @@ export default function DeliveriesScreen() {
                   <View style={[styles.statusBadge, { backgroundColor: statusColors.border }]}>
                     <Text style={styles.statusText}>{statusColors.label}</Text>
                   </View>
+
+                  {order.delivery && (
+                    <TouchableOpacity
+                      style={styles.addressContainer}
+                      onPress={() => openInMaps(order.delivery!.addressLine1)}
+                    >
+                      <MaterialCommunityIcons name="map-marker" size={20} color={colors.primary.main} />
+                      <View style={styles.addressTextContainer}>
+                        <Text style={styles.addressLine1}>{order.delivery.addressLine1}</Text>
+                        {order.delivery.addressLine2 && (
+                          <Text style={styles.addressLine2}>{order.delivery.addressLine2}</Text>
+                        )}
+                        <Text style={styles.addressCity}>
+                          {order.delivery.city}, {order.delivery.postalCode}
+                        </Text>
+                        {order.delivery.phone && (
+                          <Text style={styles.addressPhone}>Tel: {order.delivery.phone}</Text>
+                        )}
+                      </View>
+                      <MaterialCommunityIcons name="chevron-right" size={20} color={colors.primary.main} />
+                    </TouchableOpacity>
+                  )}
 
                   {order.notes && (
                     <View style={styles.notesContainer}>
@@ -255,6 +277,38 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     color: '#FFF',
+  },
+  addressContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.primary.light,
+    padding: spacing.sm,
+    borderRadius: 8,
+    marginBottom: spacing.md,
+    gap: spacing.sm,
+  },
+  addressTextContainer: {
+    flex: 1,
+  },
+  addressLine1: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.primary.main,
+    marginBottom: 2,
+  },
+  addressLine2: {
+    fontSize: 13,
+    color: colors.primary.main,
+    marginBottom: 2,
+  },
+  addressCity: {
+    fontSize: 13,
+    color: colors.primary.main,
+    marginBottom: 2,
+  },
+  addressPhone: {
+    fontSize: 12,
+    color: colors.text.secondary,
   },
   notesContainer: {
     flexDirection: 'row',

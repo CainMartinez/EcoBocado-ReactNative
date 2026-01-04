@@ -28,6 +28,13 @@ interface Order {
   currency: string;
   notes: string | null;
   items: OrderItem[];
+  delivery?: {
+    addressLine1: string;
+    addressLine2: string | null;
+    city: string;
+    postalCode: string;
+    phone: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 }
