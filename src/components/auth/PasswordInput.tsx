@@ -8,6 +8,7 @@ interface PasswordInputProps {
   label?: string;
   value: string;
   onChangeText: (text: string) => void;
+  error?: boolean;
 }
 
 const PasswordInput: FC<PasswordInputProps> = ({ 

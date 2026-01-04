@@ -63,6 +63,7 @@ export default function LoginScreen() {
                       onChangeText={onChange}
                       keyboardType="email-address"
                       autoCapitalize="none"
+                      error={!!errors.email}
                     />
                     {errors.email && (
                       <Text style={styles.errorText}>{errors.email.message}</Text>
@@ -79,6 +80,7 @@ export default function LoginScreen() {
                     <PasswordInput
                       value={value}
                       onChangeText={onChange}
+                      error={!!errors.password}
                     />
                     {errors.password && (
                       <Text style={styles.errorText}>{errors.password.message}</Text>

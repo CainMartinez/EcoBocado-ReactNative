@@ -18,7 +18,6 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background.default }]}>
       <View style={styles.container}>
-        <Text style={styles.header}>Perfil</Text>
         <ScrollView style={styles.content}>
           <View style={styles.profileCard}>
             <View style={styles.avatar}>
@@ -69,12 +68,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: '700',
-    padding: spacing.lg,
-    color: colors.text.primary,
   },
   content: {
     flex: 1,

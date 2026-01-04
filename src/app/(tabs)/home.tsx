@@ -11,8 +11,6 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background.default }]}>
       <View style={styles.container}>
-        <Text style={styles.header}>Inicio</Text>
-      
         <ScrollView style={styles.content}>
           <Text style={styles.greeting}>
             ¡Hola, {user?.name || 'Usuario'}! 👋
@@ -59,12 +57,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: '700',
-    padding: spacing.lg,
-    color: colors.text.primary,
   },
   content: {
     flex: 1,

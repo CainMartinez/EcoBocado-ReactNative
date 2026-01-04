@@ -12,6 +12,8 @@ interface InputProps {
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   style?: StyleProp<TextStyle>;
   placeholder?: string;
+  error?: boolean;
+  editable?: boolean;
 }
 
 const Input: FC<InputProps> = ({ 
@@ -24,12 +26,14 @@ const Input: FC<InputProps> = ({
   autoCapitalize = 'sentences',
   style,
   placeholder,
+  error = false,
+  editable = true,
   ...props 
 }) => {
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
-      <View style={styles.inputWrapper}>
+      <View style={[styles.inputWrapper, error && styles.inputError]}>
         <TextInput
           value={value}
           onChangeText={onChangeText}
@@ -39,6 +43,7 @@ const Input: FC<InputProps> = ({
           placeholder={placeholder || label}
           placeholderTextColor={colors.text.disabled}
           style={[styles.input, style]}
+          editable={editable}
           {...props}
         />
         {rightIcon && <View style={styles.rightIcon}>{rightIcon}</View>}
@@ -61,9 +66,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: '#CCCCCC',
     borderRadius: borderRadius.medium,
     backgroundColor: '#FFFFFF',
+  },
+  inputError: {
+    borderColor: colors.error,
+    borderWidth: 2,
   },
   input: {
     flex: 1,
