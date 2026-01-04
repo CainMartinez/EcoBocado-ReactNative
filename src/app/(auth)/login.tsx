@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Alert } from 'react-native';
+import React from 'react';
+import { View, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Alert, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Logo, Card, Button } from '../../components/ui';
 import Input from '../../components/ui/Input';
 import PasswordInput from '../../components/auth/PasswordInput';
 import { useRouter } from 'expo-router';
 import { colors, spacing } from '../../utils/theme';
+import { loginSchema, LoginFormData } from '../../schemas/authSchemas';
+import { useAuthStore } from '../../store/authStore';
+import { authService } from '../../services/authService';
 
 export default function LoginScreen() {
   const router = useRouter();
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  const { login, setLoading, isLoading } = useAuthStore();
+  
+  const { control, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
-  const handleLogin = async (): Promise<void> => {
-    if (!email || !password) {
-      Alert.alert('Error', 'Por favor completa todos los campos');
-      return;
-    }
-
+  const onSubmit = async (data: LoginFormData) => {
     setLoading(true);
     try {
-      // TODO: Implementar login con Zustand
-      console.log('Login attempt:', email);
+      const response = await authService.login(data.email, data.password);
+      login(response.accessToken, response.driver);
       router.replace('/(tabs)/home');
     } catch (error: any) {
       console.error('Login error:', error);
@@ -46,23 +52,46 @@ export default function LoginScreen() {
             <Card>
               <Logo subtitle="Bienvenido de nuevo" />
               
-              <Input
-                label="Correo electrónico"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
+              <Controller
+                control={control}
+                name="email"
+                render={({ field: { onChange, value } }) => (
+                  <>
+                    <Input
+                      label="Correo electrónico"
+                      value={value}
+                      onChangeText={onChange}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                    />
+                    {errors.email && (
+                      <Text style={styles.errorText}>{errors.email.message}</Text>
+                    )}
+                  </>
+                )}
               />
 
-              <PasswordInput
-                value={password}
-                onChangeText={setPassword}
+              <Controller
+                control={control}
+                name="password"
+                render={({ field: { onChange, value } }) => (
+                  <>
+                    <PasswordInput
+                      value={value}
+                      onChangeText={onChange}
+                    />
+                    {errors.password && (
+                      <Text style={styles.errorText}>{errors.password.message}</Text>
+                    )}
+                  </>
+                )}
               />
 
               <Button 
                 mode="contained" 
-                onPress={handleLogin}
-                loading={loading}
+                onPress={handleSubmit(onSubmit)}
+                loading={isLoading}
+                disabled={isLoading}
               >
                 Iniciar sesión
               </Button>
@@ -90,5 +119,11 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 400,
     alignSelf: 'center',
+  },
+  errorText: {
+    color: colors.error,
+    fontSize: 12,
+    marginTop: -spacing.sm,
+    marginBottom: spacing.sm,
   },
 });

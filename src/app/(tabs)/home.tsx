@@ -3,15 +3,20 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors, spacing } from '../../utils/theme';
+import { useAuthStore } from '../../store/authStore';
 
 export default function HomeScreen() {
+  const user = useAuthStore((state) => state.user);
+  
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background.default }]}>
       <View style={styles.container}>
         <Text style={styles.header}>Inicio</Text>
       
         <ScrollView style={styles.content}>
-          <Text style={styles.greeting}>¡Hola, Usuario! 👋</Text>
+          <Text style={styles.greeting}>
+            ¡Hola, {user?.name || 'Usuario'}! 👋
+          </Text>
           
           <View style={styles.card}>
             <View style={styles.cardHeader}>

@@ -4,12 +4,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../components/ui';
 import { useRouter } from 'expo-router';
 import { colors, spacing } from '../../utils/theme';
+import { useAuthStore } from '../../store/authStore';
 
 export default function ProfileScreen() {
   const router = useRouter();
+  const { user, logout } = useAuthStore();
 
   const handleLogout = () => {
-    // TODO: Implementar logout con Zustand
+    logout();
     router.replace('/(auth)/login');
   };
 
@@ -20,19 +22,35 @@ export default function ProfileScreen() {
         <ScrollView style={styles.content}>
           <View style={styles.profileCard}>
             <View style={styles.avatar}>
-              <Text style={styles.avatarText}>U</Text>
+              <Text style={styles.avatarText}>
+                {user?.name?.[0]?.toUpperCase() || 'U'}
+              </Text>
             </View>
-            <Text style={styles.name}>Usuario</Text>
-            <Text style={styles.email}>email@example.com</Text>
+            <Text style={styles.name}>
+              {user?.name || 'Usuario'}
+            </Text>
+            <Text style={styles.email}>{user?.email}</Text>
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Cuenta</Text>
-            <View style={styles.menuItem}>
-              <Text style={styles.menuText}>Editar perfil</Text>
+            <Text style={styles.sectionTitle}>Información del vehículo</Text>
+            <View style={styles.infoCard}>
+              <Text style={styles.infoLabel}>Tipo de vehículo</Text>
+              <Text style={styles.infoValue}>{user?.vehicleType || 'No especificado'}</Text>
             </View>
-            <View style={styles.menuItem}>
-              <Text style={styles.menuText}>Configuración</Text>
+            <View style={styles.infoCard}>
+              <Text style={styles.infoLabel}>Placa</Text>
+              <Text style={styles.infoValue}>{user?.vehiclePlate || 'No especificado'}</Text>
+            </View>
+            <View style={styles.infoCard}>
+              <Text style={styles.infoLabel}>Teléfono</Text>
+              <Text style={styles.infoValue}>{user?.phone || 'No especificado'}</Text>
+            </View>
+            <View style={styles.infoCard}>
+              <Text style={styles.infoLabel}>Estado</Text>
+              <Text style={styles.infoValue}>
+                {user?.isAvailable ? 'Disponible' : 'No disponible'}
+              </Text>
             </View>
           </View>
 
@@ -107,14 +125,20 @@ const styles = StyleSheet.create({
     color: colors.text.primary,
     marginBottom: spacing.md,
   },
-  menuItem: {
+  infoCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 8,
     padding: spacing.md,
     marginBottom: spacing.sm,
   },
-  menuText: {
+  infoLabel: {
+    fontSize: 12,
+    color: colors.text.secondary,
+    marginBottom: 4,
+  },
+  infoValue: {
     fontSize: 16,
     color: colors.text.primary,
+    fontWeight: '500',
   },
 });
