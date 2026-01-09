@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Alert, Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Logo, Card, Button } from '../../components/ui';
@@ -9,12 +8,12 @@ import PasswordInput from '../../components/auth/PasswordInput';
 import { useRouter } from 'expo-router';
 import { colors, spacing } from '../../utils/theme';
 import { loginSchema, LoginFormData } from '../../schemas/authSchemas';
-import { useAuthStore } from '../../store/authStore';
+import { useAuth } from '../../hooks';
 import { authService } from '../../services/authService';
 
 export default function LoginScreen() {
   const router = useRouter();
-  const { login, setLoading, isLoading } = useAuthStore();
+  const { login, setLoading, isLoading } = useAuth();
   
   const { control, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -39,18 +38,17 @@ export default function LoginScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background.default }]}>
-      <KeyboardAvoidingView 
-        style={styles.keyboardView}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    <KeyboardAvoidingView 
+      style={[styles.keyboardView, { backgroundColor: colors.background.default }]}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView 
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
       >
-        <ScrollView 
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
-        >
-          <View style={styles.container}>
-            <Card>
-              <Logo subtitle="Bienvenido de nuevo" />
+        <View style={styles.container}>
+          <Card>
+            <Logo subtitle="Bienvenido de nuevo" />
               
               <Controller
                 control={control}
@@ -101,14 +99,10 @@ export default function LoginScreen() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
   keyboardView: {
     flex: 1,
   },

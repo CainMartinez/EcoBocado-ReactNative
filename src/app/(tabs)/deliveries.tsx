@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, RefreshControl, Alert, Platform } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Button } from '../../components/ui';
 import { colors, spacing } from '../../utils/theme';
@@ -110,14 +109,13 @@ export default function DeliveriesScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background.default }]}>
-      <View style={styles.container}>
-        <ScrollView 
-          style={styles.content}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
+    <View style={styles.container}>
+      <ScrollView 
+        style={styles.content}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
           {orders.length === 0 && !loading ? (
             <Text style={styles.emptyText}>No hay entregas pendientes</Text>
           ) : (
@@ -214,14 +212,10 @@ export default function DeliveriesScreen() {
           )}
         </ScrollView>
       </View>
-    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
   container: {
     flex: 1,
   },

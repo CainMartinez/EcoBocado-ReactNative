@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors, spacing } from '../../utils/theme';
-import { useAuthStore } from '../../store/authStore';
+import { useAuth } from '../../hooks';
 import { statsService, DeliveryStats } from '../../services/statsService';
 
 export default function HomeScreen() {
-  const user = useAuthStore((state) => state.user);
+  const { user } = useAuth();
   const [stats, setStats] = useState<DeliveryStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -36,28 +35,21 @@ export default function HomeScreen() {
 
   if (loading && !stats) {
     return (
-      <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background.default }]}>
-        <View style={[styles.container, styles.centered]}>
-          <ActivityIndicator size="large" color={colors.primary.main} />
-        </View>
-      </SafeAreaView>
+      <View style={[styles.container, styles.centered]}>
+        <ActivityIndicator size="large" color={colors.primary.main} />
+      </View>
     );
   }
   
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background.default }]}>
-      <View style={styles.container}>
-        <ScrollView 
-          style={styles.content}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
-          <Text style={styles.greeting}>
-            ¡Hola, {user?.name || 'Usuario'}! 👋
-          </Text>
-
-          {/* Estado actual */}
+    <View style={styles.container}>
+      <ScrollView 
+        style={styles.content}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {/* Estado actual */}
           <View style={[styles.card, styles.highlightCard]}>
             <View style={styles.cardHeader}>
               <MaterialCommunityIcons name="clock-fast" size={28} color="#fff" />
@@ -128,14 +120,10 @@ export default function HomeScreen() {
           </View>
         </ScrollView>
       </View>
-    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
   container: {
     flex: 1,
   },
@@ -146,12 +134,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: spacing.lg,
-  },
-  greeting: {
-    fontSize: 28,
-    fontWeight: '600',
-    marginBottom: spacing.lg,
-    color: colors.text.primary,
   },
   card: {
     backgroundColor: '#FFFFFF',

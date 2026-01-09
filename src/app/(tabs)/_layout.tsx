@@ -1,9 +1,14 @@
 import { Tabs } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AppHeader from '../../components/shared/AppHeader';
 
 export default function TabLayout() {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        header: () => <AppHeader />,
+      }}
+    >
       <Tabs.Screen
         name="home"
         options={{

@@ -1,14 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../components/ui';
 import { useRouter } from 'expo-router';
 import { colors, spacing } from '../../utils/theme';
-import { useAuthStore } from '../../store/authStore';
+import { useAuth } from '../../hooks';
 
 export default function ProfileScreen() {
   const router = useRouter();
-  const { user, logout } = useAuthStore();
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
     logout();
@@ -16,56 +15,51 @@ export default function ProfileScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background.default }]}>
-      <View style={styles.container}>
-        <ScrollView style={styles.content}>
-          <View style={styles.profileCard}>
-            <View style={styles.avatar}>
-              <Text style={styles.avatarText}>
-                {user?.name?.[0]?.toUpperCase() || 'U'}
-              </Text>
-            </View>
-            <Text style={styles.name}>
-              {user?.name || 'Usuario'}
+    <View style={styles.container}>
+      <ScrollView style={styles.content}>
+        <View style={styles.profileCard}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>
+              {user?.name?.[0]?.toUpperCase() || 'U'}
             </Text>
-            <Text style={styles.email}>{user?.email}</Text>
           </View>
+          <Text style={styles.name}>
+            {user?.name || 'Usuario'}
+          </Text>
+          <Text style={styles.email}>{user?.email}</Text>
+        </View>
 
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Información del vehículo</Text>
-            <View style={styles.infoCard}>
-              <Text style={styles.infoLabel}>Tipo de vehículo</Text>
-              <Text style={styles.infoValue}>{user?.vehicleType || 'No especificado'}</Text>
-            </View>
-            <View style={styles.infoCard}>
-              <Text style={styles.infoLabel}>Placa</Text>
-              <Text style={styles.infoValue}>{user?.vehiclePlate || 'No especificado'}</Text>
-            </View>
-            <View style={styles.infoCard}>
-              <Text style={styles.infoLabel}>Teléfono</Text>
-              <Text style={styles.infoValue}>{user?.phone || 'No especificado'}</Text>
-            </View>
-            <View style={styles.infoCard}>
-              <Text style={styles.infoLabel}>Estado</Text>
-              <Text style={styles.infoValue}>
-                {user?.isAvailable ? 'Disponible' : 'No disponible'}
-              </Text>
-            </View>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Información del vehículo</Text>
+          <View style={styles.infoCard}>
+            <Text style={styles.infoLabel}>Tipo de vehículo</Text>
+            <Text style={styles.infoValue}>{user?.vehicleType || 'No especificado'}</Text>
           </View>
+          <View style={styles.infoCard}>
+            <Text style={styles.infoLabel}>Placa</Text>
+            <Text style={styles.infoValue}>{user?.vehiclePlate || 'No especificado'}</Text>
+          </View>
+          <View style={styles.infoCard}>
+            <Text style={styles.infoLabel}>Teléfono</Text>
+            <Text style={styles.infoValue}>{user?.phone || 'No especificado'}</Text>
+          </View>
+          <View style={styles.infoCard}>
+            <Text style={styles.infoLabel}>Estado</Text>
+            <Text style={styles.infoValue}>
+              {user?.isAvailable ? 'Disponible' : 'No disponible'}
+            </Text>
+          </View>
+        </View>
 
-          <Button mode="outlined" onPress={handleLogout}>
-            Cerrar sesión
-          </Button>
-        </ScrollView>
-      </View>
-    </SafeAreaView>
+        <Button mode="outlined" onPress={handleLogout}>
+          Cerrar sesión
+        </Button>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
   container: {
     flex: 1,
   },
