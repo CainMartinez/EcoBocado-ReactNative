@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../../utils/theme';
-import { useAuth } from '../../hooks';
 import { DeliveryStats } from '../../types';
 import { statsService } from '../../services/statsService';
-import { styles } from './styles/home.styles';
+import { styles } from '../../styles/home.styles';
 
 export default function HomeScreen() {
-  const { user } = useAuth();
   const [stats, setStats] = useState<DeliveryStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -90,19 +88,6 @@ export default function HomeScreen() {
                 <Text style={styles.cardTitle}>Esta Semana</Text>
                 <Text style={styles.cardSubtitle}>
                   {stats?.weekCompleted || 0} pedidos • Promedio {((stats?.weekCompleted || 0) / 7).toFixed(1)}/día
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          {/* Ingresos mensuales */}
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <MaterialCommunityIcons name="cash-multiple" size={24} color="#4CAF50" />
-              <View style={styles.cardContent}>
-                <Text style={styles.cardTitle}>Ingresos del Mes</Text>
-                <Text style={styles.cardSubtitle}>
-                  €{Number(stats?.totalRevenue || 0).toFixed(2)} • {stats?.monthCompleted || 0} entregas
                 </Text>
               </View>
             </View>

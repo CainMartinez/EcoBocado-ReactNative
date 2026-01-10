@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors, spacing } from '../../../utils/theme';
+import { colors, spacing } from '../utils/theme';
 
 export const styles = StyleSheet.create({
   keyboardView: {

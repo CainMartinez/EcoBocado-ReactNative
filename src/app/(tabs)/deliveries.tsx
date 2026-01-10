@@ -5,7 +5,7 @@ import { Button } from '../../components/ui';
 import { colors, spacing } from '../../utils/theme';
 import { Order } from '../../types';
 import { ordersService } from '../../services/ordersService';
-import { styles } from './styles/deliveries.styles';
+import { styles } from '../../styles/deliveries.styles';
 
 const STATUS_COLORS = {
   confirmed: {

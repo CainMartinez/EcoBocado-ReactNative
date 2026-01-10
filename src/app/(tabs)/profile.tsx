@@ -3,7 +3,7 @@ import { View, Text, ScrollView } from 'react-native';
 import { Button } from '../../components/ui';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../../hooks';
-import { styles } from './styles/profile.styles';
+import { styles } from '../../styles/profile.styles';
 
 export default function ProfileScreen() {
   const router = useRouter();

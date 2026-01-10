@@ -10,7 +10,7 @@ import { colors } from '../../utils/theme';
 import { loginSchema, LoginFormData } from '../../schemas/authSchemas';
 import { useAuth } from '../../hooks';
 import { authService } from '../../services/authService';
-import { styles } from './styles/login.styles';
+import { styles } from '../../styles/login.styles';
 
 export default function LoginScreen() {
   const router = useRouter();
