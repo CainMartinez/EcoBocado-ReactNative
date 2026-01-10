@@ -3,7 +3,8 @@ import { View, Text, ScrollView, RefreshControl, ActivityIndicator } from 'react
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../../utils/theme';
 import { useAuth } from '../../hooks';
-import { statsService, DeliveryStats } from '../../services/statsService';
+import { DeliveryStats } from '../../types';
+import { statsService } from '../../services/statsService';
 import { styles } from './styles/home.styles';
 
 export default function HomeScreen() {

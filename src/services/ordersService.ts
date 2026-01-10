@@ -1,43 +1,8 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
+import { Order, OrderStatus } from '../types';
 
 const API_URL = process.env.EXPO_PUBLIC_NESTJS_API_URL || 'http://localhost:8080';
-
-interface OrderItem {
-  id: number;
-  itemType: 'product' | 'rescue_menu';
-  productId: number | null;
-  rescueMenuId: number | null;
-  quantity: number;
-  unitPrice: number;
-  lineTotal: number;
-  itemName: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Order {
-  id: number;
-  uuid: string | null;
-  userId: number;
-  status: 'draft' | 'pending_payment' | 'confirmed' | 'prepared' | 'delivered' | 'cancelled' | 'completed';
-  pickupSlotId: number | null;
-  paymentIntentId: string | null;
-  subtotal: number;
-  total: number;
-  currency: string;
-  notes: string | null;
-  items: OrderItem[];
-  delivery?: {
-    addressLine1: string;
-    addressLine2: string | null;
-    city: string;
-    postalCode: string;
-    phone: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-}
 
 const getAuthHeaders = () => {
   const token = useAuthStore.getState().accessToken;
@@ -64,7 +29,7 @@ export const ordersService = {
     }
   },
 
-  updateOrderStatus: async (orderId: number, status: Order['status']): Promise<void> => {
+  updateOrderStatus: async (orderId: number, status: OrderStatus): Promise<void> => {
     try {
       // Nota: Este endpoint necesita ser creado en el backend
       await axios.patch(
@@ -80,5 +45,3 @@ export const ordersService = {
     }
   },
 };
-
-export type { Order, OrderItem };

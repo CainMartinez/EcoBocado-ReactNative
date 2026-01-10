@@ -3,7 +3,8 @@ import { View, Text, ScrollView, TouchableOpacity, Linking, RefreshControl, Aler
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Button } from '../../components/ui';
 import { colors, spacing } from '../../utils/theme';
-import { ordersService, Order } from '../../services/ordersService';
+import { Order } from '../../types';
+import { ordersService } from '../../services/ordersService';
 import { styles } from './styles/deliveries.styles';
 
 const STATUS_COLORS = {

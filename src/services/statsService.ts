@@ -1,17 +1,8 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
+import { DeliveryStats } from '../types';
 
 const API_URL = process.env.EXPO_PUBLIC_NESTJS_API_URL || 'http://localhost:8080';
-
-export interface DeliveryStats {
-  todayPending: number;
-  todayInProgress: number;
-  todayCompleted: number;
-  totalCompleted: number;
-  weekCompleted: number;
-  monthCompleted: number;
-  totalRevenue: number;
-}
 
 const getAuthHeaders = () => {
   const token = useAuthStore.getState().accessToken;

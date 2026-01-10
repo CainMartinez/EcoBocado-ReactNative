@@ -1,18 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-interface DeliveryDriver {
-  id: number;
-  uuid: string;
-  email: string;
-  name: string;
-  phone: string;
-  avatarUrl: string | null;
-  isAvailable: number;
-  vehicleType: string;
-  vehiclePlate: string;
-}
+import { DeliveryDriver } from '../types';
 
 interface AuthState {
   accessToken: string | null;
