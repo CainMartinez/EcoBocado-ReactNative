@@ -1,15 +1,16 @@
 import React from 'react';
-import { View, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Alert, Text } from 'react-native';
+import { View, KeyboardAvoidingView, Platform, ScrollView, Alert, Text } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Logo, Card, Button } from '../../components/ui';
 import Input from '../../components/ui/Input';
 import PasswordInput from '../../components/auth/PasswordInput';
 import { useRouter } from 'expo-router';
-import { colors, spacing } from '../../utils/theme';
+import { colors } from '../../utils/theme';
 import { loginSchema, LoginFormData } from '../../schemas/authSchemas';
 import { useAuth } from '../../hooks';
 import { authService } from '../../services/authService';
+import { styles } from './styles/login.styles';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -101,25 +102,3 @@ export default function LoginScreen() {
       </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  keyboardView: {
-    flex: 1,
-  },
-  scrollContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-  },
-  container: {
-    width: '100%',
-    maxWidth: 400,
-    alignSelf: 'center',
-  },
-  errorText: {
-    color: colors.error,
-    fontSize: 12,
-    marginTop: -spacing.sm,
-    marginBottom: spacing.sm,
-  },
-});
