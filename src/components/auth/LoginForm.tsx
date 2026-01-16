@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import Input from '../ui/Input';
 import PasswordInput from './PasswordInput';
 import { Button } from '../ui';
+import { styles } from '../../styles/components/auth/LoginForm.styles';
 
 interface LoginFormProps {
   email: string;
@@ -29,7 +30,6 @@ const LoginForm: FC<LoginFormProps> = ({
         label="Correo electrónico"
         value={email}
         onChangeText={setEmail}
-        icon="email"
         keyboardType="email-address"
         autoCapitalize="none"
       />
@@ -56,11 +56,5 @@ const LoginForm: FC<LoginFormProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
-});
 
 export default LoginForm;

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { colors, spacing, typography } from '../../utils/theme';
+import { View, Text, StyleProp, ViewStyle } from 'react-native';
+import { styles } from '../../styles/components/ui/Logo.styles';
 
 interface LogoProps {
   subtitle?: string;
@@ -18,31 +18,5 @@ const Logo: FC<LogoProps> = ({ subtitle, style }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    marginBottom: spacing.xl,
-  },
-  logoWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: spacing.sm,
-  },
-  emoji: {
-    fontSize: typography.fontSizes.xxl,
-    marginRight: spacing.sm,
-  },
-  title: {
-    fontSize: typography.fontSizes.xxxl,
-    fontWeight: '700',
-    color: colors.primary.main,
-  },
-  subtitle: {
-    fontSize: typography.fontSizes.lg,
-    color: colors.text.secondary,
-    textAlign: 'center',
-  },
-});
 
 export default Logo;

@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { View, TextInput, Text, StyleSheet, StyleProp, TextStyle } from 'react-native';
-import { spacing, colors, borderRadius } from '../../utils/theme';
+import { View, TextInput, Text, StyleProp, TextStyle } from 'react-native';
+import { colors } from '../../utils/theme';
+import { styles } from '../../styles/components/ui/Input.styles';
 
 interface InputProps {
   label: string;
@@ -51,39 +52,5 @@ const Input: FC<InputProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: spacing.md,
-  },
-  label: {
-    fontSize: 14,
-    color: colors.text.primary,
-    marginBottom: spacing.xs,
-    fontWeight: '500',
-  },
-  inputWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#CCCCCC',
-    borderRadius: borderRadius.medium,
-    backgroundColor: '#FFFFFF',
-  },
-  inputError: {
-    borderColor: colors.error,
-    borderWidth: 2,
-  },
-  input: {
-    flex: 1,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.md,
-    fontSize: 16,
-    color: colors.text.primary,
-  },
-  rightIcon: {
-    paddingRight: spacing.md,
-  },
-});
 
 export default Input;
