@@ -8,6 +8,14 @@
     "userInterfaceStyle": "light",
     "scheme": "ecobocado",
     "newArchEnabled": true,
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permitir a $(PRODUCT_NAME) acceder a la cámara para escanear códigos QR de verificación de pedidos."
+        }
+      ]
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ecobocado.delivery"
@@ -18,6 +26,9 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.ecobocado.delivery",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
       "edgeToEdgeEnabled": true
     },
     "web": {

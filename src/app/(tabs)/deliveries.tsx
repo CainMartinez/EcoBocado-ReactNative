@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Linking, RefreshControl, Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Button } from '../../components/ui';
+import { QRScannerModal } from '../../components/QRScannerModal';
 import { colors, spacing } from '../../utils/theme';
 import { Order } from '../../types';
 import { ordersService } from '../../services/ordersService';
@@ -32,6 +33,9 @@ export default function DeliveriesScreen() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [qrScannerVisible, setQrScannerVisible] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null);
+  const isProcessingQRRef = useRef(false);
 
   const fetchOrders = async () => {
     try {
@@ -75,8 +79,10 @@ export default function DeliveriesScreen() {
       newStatus = 'delivered';
       confirmMessage = '¿Marcar pedido como "En marcha"?';
     } else if (currentStatus === 'delivered') {
-      newStatus = 'completed';
-      confirmMessage = '¿Marcar pedido como "Completado"?';
+      // Para pasar a completed, se requiere escanear QR
+      setSelectedOrderId(orderId);
+      setQrScannerVisible(true);
+      return; // No continuamos aquí, el QR scanner manejará la actualización
     } else {
       return; // No se puede cambiar el estado de completed
     }
@@ -100,6 +106,64 @@ export default function DeliveriesScreen() {
         },
       ]
     );
+  };
+
+  const handleQRScanned = async (qrData: string) => {
+    // Evitar procesamiento múltiple usando ref (inmediato)
+    if (isProcessingQRRef.current) {
+      return;
+    }
+
+    isProcessingQRRef.current = true;
+
+    try {
+      const scannedData = JSON.parse(qrData);
+      
+      if (selectedOrderId === null) {
+        Alert.alert('Error', 'No se ha seleccionado ningún pedido.');
+        return;
+      }
+      
+      if (scannedData.orderId !== selectedOrderId) {
+        Alert.alert(
+          'Error de verificación',
+          `El código QR es del pedido #${scannedData.orderId}, pero seleccionaste el pedido #${selectedOrderId}.`
+        );
+        return;
+      }
+
+      const now = Date.now();
+      const qrTimestamp = scannedData.timestamp;
+      const maxAge = 30 * 60 * 1000;
+      
+      if (now - qrTimestamp > maxAge) {
+        Alert.alert(
+          'Código expirado',
+          'El código QR ha expirado. Solicita al cliente que genere uno nuevo.'
+        );
+        return;
+      }
+
+      // Actualizar estado a completed
+      await ordersService.updateOrderStatus(selectedOrderId, 'completed');
+      
+      Alert.alert(
+        '✅ Pedido completado',
+        `El pedido #${scannedData.orderId} ha sido marcado como completado exitosamente.`
+      );
+      
+      // Recargar pedidos
+      await fetchOrders();
+      
+    } catch (error: any) {
+      Alert.alert(
+        'Error',
+        error.message || 'El código QR no es válido. Solicita al cliente que muestre el código correcto.'
+      );
+    } finally {
+      setSelectedOrderId(null);
+      isProcessingQRRef.current = false;
+    }
   };
 
   const getStatusColors = (status: Order['status']) => {
@@ -205,7 +269,7 @@ export default function DeliveriesScreen() {
                       onPress={() => handleUpdateStatus(order.id, order.status)}
                       style={{ marginTop: spacing.md }}
                     >
-                      {order.status === 'confirmed' ? 'Marcar en marcha' : 'Marcar completado'}
+                      {order.status === 'confirmed' ? 'Marcar en marcha' : 'Escanear QR y completar'}
                     </Button>
                   )}
                 </View>
@@ -213,6 +277,17 @@ export default function DeliveriesScreen() {
             })
           )}
         </ScrollView>
+
+        {/* QR Scanner Modal */}
+        <QRScannerModal
+          visible={qrScannerVisible}
+          onClose={() => {
+            setQrScannerVisible(false);
+            setSelectedOrderId(null);
+            isProcessingQRRef.current = false;
+          }}
+          onScan={handleQRScanned}
+        />
       </View>
   );
 }
