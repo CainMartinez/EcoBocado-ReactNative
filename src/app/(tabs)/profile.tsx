@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Button } from '../../components/ui';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../../hooks';
+import { ProfileHeader, InfoItem } from '../../components/profile';
 import { styles } from '../../styles/profile.styles';
 
 export default function ProfileScreen() {
@@ -17,43 +18,37 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.content}>
-        <View style={styles.profileCard}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>
-              {user?.name?.[0]?.toUpperCase() || 'U'}
-            </Text>
-          </View>
-          <Text style={styles.name}>
-            {user?.name || 'Usuario'}
-          </Text>
-          <Text style={styles.email}>{user?.email}</Text>
-        </View>
+        <ProfileHeader 
+          name={user?.name || 'Usuario'} 
+          email={user?.email || ''} 
+        />
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Información del vehículo</Text>
-          <View style={styles.infoCard}>
-            <Text style={styles.infoLabel}>Tipo de vehículo</Text>
-            <Text style={styles.infoValue}>{user?.vehicleType || 'No especificado'}</Text>
-          </View>
-          <View style={styles.infoCard}>
-            <Text style={styles.infoLabel}>Placa</Text>
-            <Text style={styles.infoValue}>{user?.vehiclePlate || 'No especificado'}</Text>
-          </View>
-          <View style={styles.infoCard}>
-            <Text style={styles.infoLabel}>Teléfono</Text>
-            <Text style={styles.infoValue}>{user?.phone || 'No especificado'}</Text>
-          </View>
-          <View style={styles.infoCard}>
-            <Text style={styles.infoLabel}>Estado</Text>
-            <Text style={styles.infoValue}>
-              {user?.isAvailable ? 'Disponible' : 'No disponible'}
-            </Text>
-          </View>
-        </View>
+        <InfoItem
+          icon="car"
+          label="Tipo de vehículo"
+          value={'Motocicleta' /*user?.vehicleType || 'No especificado'*/}
+        />
+        <InfoItem
+          icon="card-text"
+          label="Matrícula"
+          value={user?.vehiclePlate || 'No especificado'}
+        />
+        <InfoItem
+          icon="phone"
+          label="Teléfono"
+          value={user?.phone || 'No especificado'}
+        />
+        <InfoItem
+          icon="check-circle"
+          label="Estado"
+          value={user?.isAvailable ? 'Disponible' : 'No disponible'}
+        />
 
-        <Button mode="outlined" onPress={handleLogout}>
-          Cerrar sesión
-        </Button>
+        <View style={{ padding: 20 }}>
+          <Button mode="outlined" onPress={handleLogout}>
+            Cerrar sesión
+          </Button>
+        </View>
       </ScrollView>
     </View>
   );

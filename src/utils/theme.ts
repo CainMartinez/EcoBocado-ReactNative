@@ -110,30 +110,30 @@ export interface Typography {
 
 // Paleta de colores inspirada en alimentos ecológicos
 export const colors: Colors = {
-  // Colores principales - Verde orgánico
+  // Colores principales - Verde orgánico profesional
   primary: {
-    main: '#2D6A4F',        // Verde bosque profundo
-    light: '#52B788',       // Verde hoja fresca
-    lighter: '#95D5B2',     // Verde menta suave
-    dark: '#1B4332',        // Verde oscuro intenso
+    main: '#2D6A4F',        // Verde bosque profundo - Profesional y confiable
+    light: '#52B788',       // Verde hoja fresca - Acciones positivas
+    lighter: '#95D5B2',     // Verde menta suave - Fondos sutiles
+    dark: '#1B4332',        // Verde oscuro intenso - Elementos importantes
   },
   
   // Colores secundarios - Tierra y naturaleza
   secondary: {
-    main: '#D4A574',        // Beige tierra cálido
-    light: '#E8C9A1',       // Arena clara
-    dark: '#8B6F47',        // Marrón tierra
+    main: '#457B9D',        // Azul profesional - Confianza y estabilidad
+    light: '#A8DADC',       // Azul claro - Información secundaria
+    dark: '#1D3557',        // Azul oscuro - Textos formales
   },
   
-  // Acentos - Frutos y vegetales
+  // Acentos - Sistema de estados para trabajadores
   accent: {
-    orange: '#F4A261',      // Naranja calabaza
-    yellow: '#E9C46A',      // Amarillo maíz
-    red: '#E76F51',         // Rojo tomate
-    purple: '#9D4EDD',      // Morado berenjena
+    orange: '#E76F51',      // Rojo coral - Alertas y urgencia
+    yellow: '#F4A261',      // Naranja melocotón - Advertencias
+    red: '#E63946',         // Rojo intenso - Errores críticos
+    purple: '#6A4C93',      // Morado profesional - Estadísticas
   },
   
-  // Neutrales
+  // Neutrales - Paleta extendida para UI profesional
   neutral: {
     white: '#FFFFFF',
     offWhite: '#F8F9FA',
@@ -143,11 +143,11 @@ export const colors: Colors = {
     charcoal: '#212529',
   },
   
-  // Estados
-  success: '#52B788',
-  warning: '#F4A261',
-  error: '#E76F51',
-  info: '#457B9D',
+  // Estados - Sistema profesional de feedback
+  success: '#52B788',      // Verde éxito - Completado
+  warning: '#F4A261',      // Naranja advertencia - Atención
+  error: '#E63946',        // Rojo error - Crítico
+  info: '#457B9D',         // Azul información - Neutral
   
   // Fondos
   background: {

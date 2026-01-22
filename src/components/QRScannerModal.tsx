@@ -1,29 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { View, Text, Modal, TouchableOpacity } from 'react-native';
-import { CameraView, useCameraPermissions } from 'expo-camera';
+import { CameraView } from 'expo-camera';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { QRScannerModalProps } from '../types/QRScanner';
+import { useQRScannerModal } from '../hooks';
 import { styles } from '../styles/qrScanner.styles';
 import { colors } from '../utils/theme';
 
 /**
  * Modal con escáner de código QR para verificación de pedidos
- * Solicita permisos de cámara y escanea códigos QR
+ * Componente de presentación - La lógica está en useQRScannerModal
  */
 export function QRScannerModal({ visible, onClose, onScan }: QRScannerModalProps) {
-  const [permission, requestPermission] = useCameraPermissions();
-  const hasScannedRef = useRef(false);
+  const { permission, requestPermission, hasScannedRef, handleBarCodeScanned } = useQRScannerModal({
+    visible,
+    onClose,
+    onScan,
+  });
 
-  useEffect(() => {
-    if (visible) {
-      // Resetear cuando se abre el modal
-      hasScannedRef.current = false;
-    }
-  }, [visible]);
-
-  // Manejar permisos
   if (!permission) {
-    return null; // Aún cargando permisos
+    return null;
   }
 
   if (!permission.granted) {
@@ -47,22 +43,6 @@ export function QRScannerModal({ visible, onClose, onScan }: QRScannerModalProps
       </Modal>
     );
   }
-
-  const handleBarCodeScanned = ({ data }: { type: string; data: string }) => {
-    // Usar ref para chequeo inmediato (más rápido que estado)
-    if (hasScannedRef.current) {
-      return;
-    }
-
-    // Marcar inmediatamente como escaneado
-    hasScannedRef.current = true;
-    
-    // Cerrar modal ANTES de procesar
-    onClose();
-    
-    // Llamar callback con los datos
-    onScan(data);
-  };
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
