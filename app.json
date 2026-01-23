@@ -14,7 +14,18 @@
         {
           "cameraPermission": "Permitir a $(PRODUCT_NAME) acceder a la cámara para escanear códigos QR de verificación de pedidos."
         }
-      ]
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Permitir a $(PRODUCT_NAME) acceder a tu ubicación para rastrear entregas en tiempo real.",
+          "locationAlwaysPermission": "Permitir a $(PRODUCT_NAME) acceder a tu ubicación en segundo plano para seguimiento continuo de entregas.",
+          "locationWhenInUsePermission": "Permitir a $(PRODUCT_NAME) acceder a tu ubicación mientras usas la app para rastrear entregas.",
+          "isAndroidBackgroundLocationEnabled": true,
+          "isAndroidForegroundServiceEnabled": true
+        }
+      ],
+      "expo-router"
     ],
     "ios": {
       "supportsTablet": true,
@@ -27,7 +38,12 @@
       },
       "package": "com.ecobocado.delivery",
       "permissions": [
-        "android.permission.CAMERA"
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_LOCATION",
+        "android.permission.ACCESS_BACKGROUND_LOCATION"
       ],
       "edgeToEdgeEnabled": true
     },

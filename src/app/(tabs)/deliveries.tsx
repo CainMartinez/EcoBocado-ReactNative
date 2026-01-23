@@ -2,7 +2,7 @@ import React from 'react';
 import { View, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
 import { QRScannerModal } from '../../components/QRScannerModal';
 import { OrderCard } from '../../components/deliveries';
-import { useDeliveries, useQRScanner } from '../../hooks';
+import { useDeliveries, useQRScanner, useLocationTracking } from '../../hooks';
 import { colors } from '../../utils/theme';
 import { styles } from '../../styles/deliveries.styles';
 import type { OrderStatus } from '../../types';
@@ -17,6 +17,9 @@ export default function DeliveriesScreen() {
     closeScanner, 
     handleQRScanned 
   } = useQRScanner();
+
+  // Hook para tracking de ubicación (enviará ubicación cada 3 minutos)
+  useLocationTracking();
 
   // Manejar actualización de estado con lógica de QR scanner
   const handleOrderAction = (orderId: number, status: OrderStatus) => {

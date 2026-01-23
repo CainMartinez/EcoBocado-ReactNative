@@ -4,3 +4,4 @@ export { useQRScanner } from './useQRScanner';
 export { useStats } from './useStats';
 export { useQRScannerModal } from './useQRScannerModal';
 export { useOrderCard } from './useOrderCard';
+export { useLocationTracking } from './useLocationTracking';
