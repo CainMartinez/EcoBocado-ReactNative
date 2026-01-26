@@ -21,7 +21,6 @@ export const getRanking = async (): Promise<RankingResponse> => {
     );
     return response.data;
   } catch (error: any) {
-    console.error('❌ [RANKING SERVICE] Error:', error.response?.status, error.response?.data);
     if (error.response?.data?.message) {
       throw new Error(error.response.data.message);
     }

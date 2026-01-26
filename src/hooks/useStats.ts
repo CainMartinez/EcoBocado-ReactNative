@@ -13,7 +13,6 @@ export function useStats() {
       const data = await statsService.getDeliveryStats();
       setStats(data);
     } catch (error) {
-      console.error('Error fetching stats:', error);
     } finally {
       setLoading(false);
     }

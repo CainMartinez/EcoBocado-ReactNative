@@ -33,6 +33,7 @@ export interface Order {
   uuid: string | null;
   userId: number;
   status: OrderStatus;
+  deliveryType: 'pickup' | 'delivery';
   pickupSlotId: number | null;
   paymentIntentId: string | null;
   subtotal: number;

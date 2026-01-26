@@ -14,12 +14,12 @@ export function useDeliveries() {
       const allOrders = await ordersService.getAllOrders();
       
       const filteredOrders = allOrders.filter(order => 
+        order.deliveryType !== 'pickup' &&
         ['confirmed', 'delivered', 'completed'].includes(order.status)
       );
       
       setOrders(filteredOrders);
     } catch (error: any) {
-      console.error('Error fetching orders:', error);
       Alert.alert('Error', error.message || 'Error al cargar los pedidos');
     } finally {
       setLoading(false);

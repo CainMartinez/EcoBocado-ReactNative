@@ -67,7 +67,6 @@ export const locationService = {
 
       return response.json();
     } catch (error: any) {
-      console.error('❌ Error obteniendo ubicación:', error);
       throw error;
     }
   },

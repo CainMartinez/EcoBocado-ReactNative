@@ -31,7 +31,6 @@ export default function LoginScreen() {
       login(response.accessToken, response.driver);
       router.replace('/(tabs)/home');
     } catch (error: any) {
-      console.error('Login error:', error);
       Alert.alert('Error', error.message || 'Error al iniciar sesión');
     } finally {
       setLoading(false);

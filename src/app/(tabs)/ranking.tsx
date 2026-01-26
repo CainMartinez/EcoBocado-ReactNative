@@ -17,7 +17,6 @@ export default function RankingScreen() {
       const data = await getRanking();
       setRanking(data);
     } catch (err) {
-      console.error('Error loading ranking:', err);
       setError('No se pudo cargar el ranking. Intenta de nuevo.');
     } finally {
       setLoading(false);

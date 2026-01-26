@@ -17,7 +17,6 @@ export const useLocationTracking = () => {
       const { status: foregroundStatus } = await Location.requestForegroundPermissionsAsync();
       
       if (foregroundStatus !== 'granted') {
-        console.warn('Permisos de ubicación denegados');
         return false;
       }
 
@@ -31,7 +30,6 @@ export const useLocationTracking = () => {
 
       return true;
     } catch (error) {
-      console.error('Error solicitando permisos de ubicación:', error);
       return false;
     }
   };
@@ -77,8 +75,6 @@ export const useLocationTracking = () => {
 
     // Configurar intervalo para enviar cada 3 minutos
     intervalRef.current = setInterval(sendLocation, LOCATION_UPDATE_INTERVAL);
-
-    console.log('Tracking de ubicación iniciado');
   };
 
   const stopTracking = () => {
@@ -87,7 +83,6 @@ export const useLocationTracking = () => {
       intervalRef.current = null;
     }
     isTrackingRef.current = false;
-    console.log('Tracking de ubicación detenido');
   };
 
   // Iniciar tracking automáticamente cuando hay un usuario autenticado
