@@ -5,7 +5,7 @@ export interface DeliveryDriver {
   name: string;
   phone: string;
   avatarUrl: string | null;
-  isAvailable: number;
+  isAvailable: number | boolean;
   vehicleType: string;
   vehiclePlate: string;
 }

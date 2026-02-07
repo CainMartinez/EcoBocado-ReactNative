@@ -3,10 +3,12 @@ import { View, Text, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { spacing } from '../../utils/theme';
 import { useAuth } from '../../hooks';
+import { useProfile } from '../../hooks/queries';
 import { styles } from '../../styles/components/shared/AppHeader.styles';
 
 export default function AppHeader() {
   const { user } = useAuth();
+  const { data: profile } = useProfile();
   const insets = useSafeAreaInsets();
 
   return (
@@ -20,12 +22,18 @@ export default function AppHeader() {
       </View>
       
       <View style={styles.centerSection}>
-        <Text style={styles.greeting}>Hola, {user?.name || 'Usuario'}</Text>
+        <Text style={styles.greeting}>Hola, {profile?.name || user?.name || 'Usuario'}</Text>
       </View>
 
       <View style={styles.rightSection}>
         <View style={styles.avatarContainer}>
-          {user?.name ? (
+          {profile?.avatarUrl ? (
+            <Image 
+              source={{ uri: profile.avatarUrl }} 
+              style={styles.avatarImage}
+              resizeMode="cover"
+            />
+          ) : user?.name ? (
             <View style={styles.avatar}>
               <Text style={styles.avatarText}>
                 {user.name.charAt(0).toUpperCase()}

@@ -47,6 +47,11 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  avatarImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
   avatarText: {
     color: '#fff',
     fontSize: 18,

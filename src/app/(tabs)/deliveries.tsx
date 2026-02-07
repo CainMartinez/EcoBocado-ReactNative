@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
+import { View, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
 import { QRScannerModal } from '../../components/QRScannerModal';
 import { OrderCard } from '../../components/deliveries';
 import { useDeliveries, useQRScanner, useLocationTracking } from '../../hooks';
 import { colors } from '../../utils/theme';
 import { styles } from '../../styles/deliveries.styles';
-import type { OrderStatus } from '../../types';
+import type { OrderStatus, Order } from '../../types';
 
 export default function DeliveriesScreen() {
   // Custom hooks para manejar la lógica
@@ -40,20 +40,20 @@ export default function DeliveriesScreen() {
 
   return (
     <View style={styles.container}>
-      <ScrollView 
-        style={styles.content}
+      <FlatList<Order>
+        data={orders}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <OrderCard
+            order={item}
+            onPress={() => handleOrderAction(item.id, item.status)}
+          />
+        )}
+        contentContainerStyle={styles.content}
         refreshControl={(
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         )}
-      >
-        {orders.map((order) => (
-          <OrderCard
-            key={order.id}
-            order={order}
-            onPress={() => handleOrderAction(order.id, order.status)}
-          />
-        ))}
-      </ScrollView>
+      />
 
       <QRScannerModal
         visible={qrScannerVisible}
